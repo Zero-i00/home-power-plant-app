@@ -17,18 +17,32 @@ class MonthEnum(enum.Enum):
     NOVEMBER = 'november'
     DECEMBER = 'december'
 
+class MonthDaysEnum(enum.IntEnum):
+    JANUARY = 31
+    FEBRUARY = 28 
+    MARCH = 31
+    APRIL = 30
+    MAY = 31
+    JUNE = 30
+    JULY = 31
+    AUGUST = 31
+    SEPTEMBER = 30
+    OCTOBER = 31
+    NOVEMBER = 30
+    DECEMBER = 31
+
 
 class CityModel(Base):
     __tablename__ = 'city'
 
     name: Mapped[str]
 
-    parameters: Mapped[list['CityParameter']] = relationship(
+    parameters: Mapped[list['CityParameterModel']] = relationship(
         back_populates='city'
     )
 
 
-class CityParameter(Base):
+class CityParameterModel(Base):
     __tablename__ = 'city_parameter'
 
     moth: Mapped[MonthEnum]
