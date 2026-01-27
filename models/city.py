@@ -45,7 +45,7 @@ class CityModel(Base):
 class CityParameterModel(Base):
     __tablename__ = 'city_parameter'
 
-    moth: Mapped[MonthEnum]
+    month: Mapped[MonthEnum]
 
     insolation: Mapped[int]
     wind_speed: Mapped[int]

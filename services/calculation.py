@@ -26,7 +26,7 @@ class Calculation:
         total = 0
 
         for param in parameters:
-            day_peer_month = MonthDaysEnum[param.month]
+            day_peer_month = MonthDaysEnum[param.month.name]
             total += param.insolation * panel_power * panel_kpd * day_peer_month
 
         return total

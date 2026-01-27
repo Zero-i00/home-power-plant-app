@@ -1,4 +1,4 @@
-from schemas.city import CitySchema
+from schemas.city import CityBaseSchema
 from sqlalchemy.ext.asyncio import AsyncSession
 from models.city import CityModel
 from sqlalchemy import select
@@ -6,7 +6,7 @@ from sqlalchemy import select
 class CityService:
 
     @staticmethod
-    async def retrieve(session: AsyncSession, id: int) -> CitySchema | None:
+    async def retrieve(session: AsyncSession, id: int) -> CityBaseSchema | None:
         query = select(CityModel).where(CityModel.id == id)
 
         result = await session.execute(query)
@@ -15,7 +15,7 @@ class CityService:
         if city is None:
             return None
 
-        return CitySchema.model_validate(city)
+        return CityBaseSchema.model_validate(city)
 
 
 city_service = CityService()

@@ -237,7 +237,7 @@ async def seed_database(session: AsyncSession) -> None:
 
         for i, month in enumerate(MONTHS):
             param = CityParameterModel(
-                moth=month,
+                month=month,
                 insolation=insolation[i],
                 wind_speed=wind_speed[i],
                 air_density=air_density[i],
