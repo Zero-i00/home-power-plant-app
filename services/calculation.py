@@ -30,6 +30,13 @@ class Calculation:
             total += param.insolation * panel_power * panel_kpd * day_peer_month
 
         return total
+    
+    # TODO написать функцию вычислений для генератора ветра
+    # session: AsyncSession, city_id: int нужно через , дополнить параметрами из CalculationWindGeneratorIn 
+    @staticmethod
+    async def wind_generator(session: AsyncSession, city_id: int) -> float:
+        #  Копируешь всё из solar_station и меняешь только вычисления в for
+        ...
 
     
 calculation_service = Calculation()

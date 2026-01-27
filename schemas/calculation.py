@@ -8,3 +8,14 @@ class CalculationSolarPanelIn(BaseModel):
 class CalculationSolarPanelOut(BaseModel):
     total: float
 
+
+
+# TODO данные, которые пользователь вводит руками
+class CalculationWindGeneratorIn(BaseModel):
+    city_id: int
+
+
+
+class CalculationWindGeneratorOut(BaseModel):
+    total: float
+
