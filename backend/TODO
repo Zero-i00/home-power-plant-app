@@ -1,8 +1,0 @@
-0. Настроить python и попробовать запустить проект
-1. В файле ./schemas/calculation.py выполнять TODO
-2. В файле ./services/calculation.py выполнять TODO
-3. В файле ./routes/calculation.py выполнять TODO
-
-
-Подсказка
-git pull origin master

@@ -17,8 +17,6 @@ venv\Scripts\activate  # Windows
 ### 2. Установите зависимости
 
 ```bash
-pip install fastapi uvicorn sqlalchemy asyncpg pydantic-settings
-или
 pip install -r requirements.txt	
 ```
 
@@ -55,3 +53,27 @@ uvicorn main:app --reload --host localhost --port 8000
 API будет доступен по адресу: http://localhost:8000
 
 Документация Swagger: http://localhost:8000/docs
+
+---
+
+# Home Power Plant Frontend
+
+## Требования
+кардиологу
+- Python 3.12+
+- Flet
+
+## Установка
+
+### 1. Установите Flet
+
+## Запуск
+
+```bash
+cd frontend
+python main.py
+```
+
+Приложение откроется в отдельном окне.
+
+pip
