@@ -1,5 +1,5 @@
 import flet as ft
-from pages import HomePage, SolarPage, WindPage
+from pages import HomePage, SolarPage, WindPage, BothPage
 
 class AppRouter:
     def __init__(self, page: ft.Page) -> None:
@@ -7,7 +7,8 @@ class AppRouter:
         self.routes = {
             '/': HomePage,
             '/solar': SolarPage,
-            '/wind': WindPage
+            '/wind': WindPage,
+            '/both': BothPage
         }
 
     async def handle_route(self, route: str):

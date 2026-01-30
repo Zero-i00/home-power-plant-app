@@ -12,7 +12,7 @@ class HomePage(BasePage):
             options=[
                 ft.DropdownOption(key='solar', text='Солнечная'),
                 ft.DropdownOption(key='wind', text='Ветреная'),
-                ft.DropdownOption(key='all', text='Обе'),
+                ft.DropdownOption(key='both', text='Обе'),
             ],
             width=320,
             on_text_change=self.on_station_change
@@ -28,9 +28,11 @@ class HomePage(BasePage):
     async def build(self) -> ft.View:
         return ft.View(
             route='/',
+            vertical_alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             controls=self.get_content()
-        ) 
-    
+        )
+
     def get_content(self) -> list[ft.BaseControl]:
         return [
             ft.Column(
@@ -38,7 +40,8 @@ class HomePage(BasePage):
                     ft.Text("Выбери тип станции"),
                     self.station_dropdown,
                     self.continue_button
-                ]
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             )
         ]
     
@@ -62,3 +65,8 @@ class HomePage(BasePage):
 
         if self.station_type == 'wind':
             self.page.go('/wind')
+
+        if self.station_type == 'both':
+            self.page.go('/both')
+
+        
