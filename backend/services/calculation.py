@@ -29,15 +29,18 @@ class Calculation:
             day_peer_month = MonthDaysEnum[param.month.name]
             total += param.insolation * panel_power  *  day_peer_month * sist_kpd
 
-        result = total * price_energy_sun
-        print(result)
+        annual = total * price_energy_sun
 
+        cumulative = 0
         ears = 0
-        while price_sun > result:
-            result = result + (result * 1.07)
-
+        while price_sun > cumulative:
+            year_income = annual * (1.07 ** ears)
+            remaining = price_sun - cumulative
+            if remaining <= year_income:
+                ears += round(remaining / year_income, 2)
+                break
+            cumulative += year_income
             ears += 1
-
 
         return ears
 
@@ -68,13 +71,18 @@ class Calculation:
             total1 += 0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.35 * 24 * day_peer_month * 0.75 
 
         
-        result1 = total1 * price_energy_wind
+        annual1 = total1 * price_energy_wind
+        cumulative1 = 0
         ears1 = 0
-        while price_wind > result1:
-            result1 *= 1.07
+        while price_wind > cumulative1:
+            year_income = annual1 * (1.07 ** ears1)
+            remaining = price_wind - cumulative1
+            if remaining <= year_income:
+                ears1 += round(remaining / year_income, 2)
+                break
+            cumulative1 += year_income
             ears1 += 1
-        
-        
+
         return ears1
 
     
