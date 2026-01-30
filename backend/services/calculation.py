@@ -29,14 +29,21 @@ class Calculation:
             day_peer_month = MonthDaysEnum[param.month.name]
             total += param.insolation * panel_power  *  day_peer_month * sist_kpd
 
-        result =   price_sun / (total * price_energy_sun) 
+        result = total * price_energy_sun
 
-        return result
+        ears = 0
+        while price_sun > result:
+            result * 1.07
+
+            ears += 1
+
+
+        return ears
 
 
     
     @staticmethod
-    async def wind_generator(session: AsyncSession, city_id: int, blade_length: float) -> float:
+    async def wind_generator(session: AsyncSession, city_id: int, blade_length: float, price_energy_wind: float, price_wind: float) -> float:
         city = await city_service.retrieve(session, city_id)
 
         if city is None:
@@ -57,9 +64,18 @@ class Calculation:
 
         for param in parameters:
             day_peer_month = MonthDaysEnum[param.month.name]
-            total1 += 0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.3 * 24 * day_peer_month * 0.75 
+            total1 += 0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.35 * 24 * day_peer_month * 0.75 
 
-        return total1
+        
+        result1 = total1 * price_energy_wind
+        ears1 = 0
+        while price_wind > result1:
+            result1 * 1.07
+
+            ears1 += 1
+        
+        
+        return ears1
 
     
 calculation_service = Calculation()
