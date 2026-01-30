@@ -88,41 +88,47 @@ class Calculation:
         return {"years": ears1, "months": 0}
 
     
-    # @staticmethod
-    # async def wind_generator(session: AsyncSession, city_id: int, blade_length: float, sist_kpd: float, panel_power: float, price_total: float, price_energy_total: float) -> float:
-    #     city = await city_service.retrieve(session, city_id)
+    @staticmethod
+    async def total_generator(session: AsyncSession, city_id: int, blade_length: float, sist_kpd: float, panel_power: float, price_total: float, price_energy_total: float) -> dict:
+        city = await city_service.retrieve(session, city_id)
 
-    #     if city is None:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_404_NOT_FOUND,
-    #             detail='Не удалось найти такой город'
-    #         )
+        if city is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Не удалось найти такой город'
+            )
     
-    #     parameters = await city_parameters_service.list_by_city_id(session, city.id)
+        parameters = await city_parameters_service.list_by_city_id(session, city.id)
 
-    #     if parameters is None:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_404_NOT_FOUND,
-    #             detail=f'Не удалось найти параметры для города {city.name}'
+        if parameters is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Не удалось найти параметры для города {city.name}'
 
-    #         )
+            )
         
 
-    #     total2 = 0
+        total2 = 0
 
-    #     for param in parameters:
-    #         day_peer_month = MonthDaysEnum[param.month.name]
-    #         total2 += (0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.35 * 24 * day_peer_month * 0.75) + (param.insolation * panel_power  *  day_peer_month * sist_kpd)
+        for param in parameters:
+            day_peer_month = MonthDaysEnum[param.month.name]
+            total2 += (0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.35 * 24 * day_peer_month * 0.75) + (param.insolation * panel_power  *  day_peer_month * sist_kpd)
 
 
-    #     result2 = total2 * price_energy_total
-    #     ears2 = 0
-    #     while price_total > result2:
-    #         result2 *= 1.07
-    #         ears2 += 1
+        annual2 = total2 * price_energy_total
+        cumulative2 = 0
+        ears2 = 0
+        while price_total > cumulative2:
+            year_income = annual2 * (1.07 ** ears2)
+            remaining = price_total - cumulative2
+            if remaining <= year_income:
+                fraction = remaining / year_income
+                months = round(fraction * 12)
+                return {"years": ears2, "months": months}
+            cumulative2 += year_income
+            ears2 += 1
 
-    #     return ears2
-
+        return {"years": ears2, "months": 0}
         
 
 

@@ -29,7 +29,7 @@ class CalculationWindGeneratorOut(BaseModel):
 
 
 
-class CalculationAllGeneratorIn(BaseModel):
+class CalculationTotalGeneratorIn(BaseModel):
     city_id: int
     
     # Солнечная
@@ -45,6 +45,7 @@ class CalculationAllGeneratorIn(BaseModel):
     price_energy_total: float
 
 
-class CalculationAllGeneratorOut(BaseModel):
-    total: float
+class CalculationTotalGeneratorOut(BaseModel):
+    years: int
+    months: int
 

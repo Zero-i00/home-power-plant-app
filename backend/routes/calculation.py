@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from database.session import SessionDep
 from services.calculation import calculation_service
-from schemas.calculation import CalculationSolarPanelIn, CalculationSolarPanelOut, CalculationWindGeneratorIn, CalculationWindGeneratorOut
+from schemas.calculation import CalculationSolarPanelIn, CalculationSolarPanelOut, CalculationWindGeneratorIn,  CalculationWindGeneratorOut, CalculationTotalGeneratorIn, CalculationTotalGeneratorOut
 
 router = APIRouter(prefix='/calculation', tags=[' calculation'])
 
@@ -37,3 +37,24 @@ async def calculation_wind_generator_route(
     )
 
     return CalculationWindGeneratorOut(years=result["years"], months=result["months"])
+
+
+
+@router.post('/total_generator/')
+async def calculation_total_generator_route(
+     session: SessionDep,
+    data: CalculationTotalGeneratorIn
+) -> CalculationTotalGeneratorOut:
+    result = await calculation_service.total_generator(
+        session=session, 
+        city_id=data.city_id,
+        blade_length=data. blade_length,
+        sist_kpd=data.sist_kpd,
+        panel_power=data.panel_power,
+        price_total=data.price_total,
+        price_energy_total=data.price_energy_total
+        
+         
+    )
+
+    return CalculationTotalGeneratorOut(years=result["years"], months=result["months"])
