@@ -23,7 +23,7 @@ async def calculation_solar_panel(
     return CalculationSolarPanelOut(total=result)
 
 
-# TODO расчёт параметров для генератора ветра
+
 @router.post('/wind_generator/')
 async def calculation_wind_generator(
      session: SessionDep,

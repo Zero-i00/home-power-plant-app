@@ -77,4 +77,45 @@ class Calculation:
         return ears1
 
     
+    @staticmethod
+    async def wind_generator(session: AsyncSession, city_id: int, blade_length: float, sist_kpd: float, panel_power: float, price_total: float, price_energy_total: float) -> float:
+        city = await city_service.retrieve(session, city_id)
+
+        if city is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='Не удалось найти такой город'
+            )
+    
+        parameters = await city_parameters_service.list_by_city_id(session, city.id)
+
+        if parameters is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Не удалось найти параметры для города {city.name}'
+
+            )
+        
+
+        total2 = 0
+
+        for param in parameters:
+            day_peer_month = MonthDaysEnum[param.month.name]
+            total2 += (0.5 * param.air_density * ((blade_length * blade_length) * 3.14)  * (param.wind_speed*param.wind_speed*param.wind_speed) * 0.35 * 24 * day_peer_month * 0.75) + (param.insolation * panel_power  *  day_peer_month * sist_kpd)
+
+
+        result2 = total2 * price_energy_total
+        ears2 = 0
+        while price_total > result2:
+            result2 *= 1.07
+            ears2 += 1
+
+        return ears2
+
+        
+
+
+
+
+
 calculation_service = Calculation()

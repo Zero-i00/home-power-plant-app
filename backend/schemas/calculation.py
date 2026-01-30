@@ -36,6 +36,9 @@ class CalculationAllGeneratorIn(BaseModel):
 
     # Ветреная
     blade_length: float
+    
+    
+    
     price_total: float
     price_energy_total: float
 
