@@ -33,7 +33,7 @@ class Calculation:
 
         ears = 0
         while price_sun > result:
-            result * 1.07
+            result *= 1.07
 
             ears += 1
 
@@ -70,8 +70,7 @@ class Calculation:
         result1 = total1 * price_energy_wind
         ears1 = 0
         while price_wind > result1:
-            result1 * 1.07
-
+            result1 *= 1.07
             ears1 += 1
         
         

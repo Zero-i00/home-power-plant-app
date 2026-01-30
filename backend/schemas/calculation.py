@@ -25,3 +25,21 @@ class CalculationWindGeneratorIn(BaseModel):
 class CalculationWindGeneratorOut(BaseModel):
     total: float
 
+
+
+class CalculationAllGeneratorIn(BaseModel):
+    city_id: int
+    
+    # Солнечная
+    sist_kpd: float
+    panel_power: float
+
+    # Ветреная
+    blade_length: float
+    price_total: float
+    price_energy_total: float
+
+
+class CalculationAllGeneratorOut(BaseModel):
+    total: float
+
