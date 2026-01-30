@@ -6,18 +6,17 @@ from schemas.calculation import CalculationSolarPanelIn, CalculationSolarPanelOu
 router = APIRouter(prefix='/calculation', tags=[' calculation'])
 
 @router.post('/solar/')
-async def calculation_solar_panel(
+async def calculation_solar_panel_route(
     session: SessionDep,
     data: CalculationSolarPanelIn
 ) -> CalculationSolarPanelOut:
     result = await calculation_service.solar_station(
         session=session, 
         city_id=data.city_id,
-        panel_kpd=data.panel_kpd,
+        sist_kpd=data.sist_kpd,
         panel_power=data.panel_power,
-        price_energy_sun=data.price_energy_sun,
-        price_sun=data.price_sun
-
+        price_sun=data.price_sun,
+        price_energy_sun=data.price_energy_sun
     )
 
     return CalculationSolarPanelOut(total=result)
@@ -25,7 +24,7 @@ async def calculation_solar_panel(
 
 
 @router.post('/wind_generator/')
-async def calculation_wind_generator(
+async def calculation_wind_generator_route(
      session: SessionDep,
     data: CalculationWindGeneratorIn
 ) -> CalculationWindGeneratorOut:

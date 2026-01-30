@@ -6,6 +6,18 @@ from sqlalchemy import select
 class CityService:
 
     @staticmethod
+    async def list(session: AsyncSession) -> list[CityBaseSchema]:
+        query = select(CityModel)
+        result = await session.execute(query)
+
+        city_list = result.scalars().all()
+
+        return [
+            CityBaseSchema.model_validate(city)
+            for city in  city_list
+        ]
+
+    @staticmethod
     async def retrieve(session: AsyncSession, id: int) -> CityBaseSchema | None:
         query = select(CityModel).where(CityModel.id == id)
 
