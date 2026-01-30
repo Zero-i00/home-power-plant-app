@@ -6,7 +6,7 @@ from models.city import MonthDaysEnum
 class Calculation:
 
     @staticmethod
-    async def solar_station(session: AsyncSession, city_id: int, panel_power: float, sist_kpd: float, price_energy_sun: float, price_sun: float ) -> float:
+    async def solar_station(session: AsyncSession, city_id: int, panel_power: float, sist_kpd: float, price_energy_sun: float, price_sun: float ) -> dict:
         city = await city_service.retrieve(session, city_id)
 
         if city is None:
@@ -37,17 +37,18 @@ class Calculation:
             year_income = annual * (1.07 ** ears)
             remaining = price_sun - cumulative
             if remaining <= year_income:
-                ears += round(remaining / year_income, 2)
-                break
+                fraction = remaining / year_income
+                months = round(fraction * 12)
+                return {"years": ears, "months": months}
             cumulative += year_income
             ears += 1
 
-        return ears
+        return {"years": ears, "months": 0}
 
 
     
     @staticmethod
-    async def wind_generator(session: AsyncSession, city_id: int, blade_length: float, price_energy_wind: float, price_wind: float) -> float:
+    async def wind_generator(session: AsyncSession, city_id: int, blade_length: float, price_energy_wind: float, price_wind: float) -> dict:
         city = await city_service.retrieve(session, city_id)
 
         if city is None:
@@ -78,12 +79,13 @@ class Calculation:
             year_income = annual1 * (1.07 ** ears1)
             remaining = price_wind - cumulative1
             if remaining <= year_income:
-                ears1 += round(remaining / year_income, 2)
-                break
+                fraction = remaining / year_income
+                months = round(fraction * 12)
+                return {"years": ears1, "months": months}
             cumulative1 += year_income
             ears1 += 1
 
-        return ears1
+        return {"years": ears1, "months": 0}
 
     
     # @staticmethod

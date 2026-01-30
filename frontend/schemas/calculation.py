@@ -10,7 +10,8 @@ class CalculationSolarPanelIn(BaseModel):
 
 
 class CalculationSolarPanelOut(BaseModel):
-    total: float
+    years: int
+    months: int
 
 
 
@@ -23,7 +24,8 @@ class CalculationWindGeneratorIn(BaseModel):
 
 
 class CalculationWindGeneratorOut(BaseModel):
-    total: float
+    years: int
+    months: int
 
 
 
@@ -36,6 +38,9 @@ class CalculationAllGeneratorIn(BaseModel):
 
     # Ветреная
     blade_length: float
+    
+    
+    
     price_total: float
     price_energy_total: float
 

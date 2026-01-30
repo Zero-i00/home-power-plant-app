@@ -19,7 +19,7 @@ async def calculation_solar_panel_route(
         price_energy_sun=data.price_energy_sun
     )
 
-    return CalculationSolarPanelOut(total=result)
+    return CalculationSolarPanelOut(years=result["years"], months=result["months"])
 
 
 
@@ -36,4 +36,4 @@ async def calculation_wind_generator_route(
         price_energy_wind=data.price_energy_wind 
     )
 
-    return CalculationWindGeneratorOut(total=result)
+    return CalculationWindGeneratorOut(years=result["years"], months=result["months"])
