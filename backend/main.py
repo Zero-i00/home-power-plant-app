@@ -4,7 +4,7 @@ from database.orm import Base
 from database.session import engine, session_factory
 from database.seeder import seed_database
 from contextlib import asynccontextmanager
-from routes import calculation_router
+from routes import calculation_router, city_router
 
 from models import *
 
@@ -22,6 +22,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+app.include_router(city_router)
 app.include_router(calculation_router)
 
 @app.get('/')
